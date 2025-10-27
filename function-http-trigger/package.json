@@ -1,0 +1,15 @@
+{
+  "name": "fn-http-trigger",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/functions/*.js",
+  "scripts": {
+    "start": "func start",
+    "test": "echo \"No tests yet...\""
+  },
+  "dependencies": {
+    "@azure/functions": "^4.0.0",
+    "@azure/service-bus": "^7.9.0"
+  },
+  "devDependencies": {}
+}

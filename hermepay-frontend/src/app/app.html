@@ -1,0 +1,33 @@
+<h1>Bem-vindo ao Herme Pay Frontend!</h1>
+
+<hr>
+
+<h2>Status do Dashboard (do BFF)</h2>
+
+<div *ngIf="errorLoadingData" style="color: red;">
+  {{ errorLoadingData }}
+</div>
+
+<div *ngIf="dashboardData">
+  <h3>Status dos Serviços:</h3>
+  <ul>
+    <li>
+      Serviço de Lojas: {{ dashboardData.statusServicos?.lojas?.status }}
+      (Status Code: {{ dashboardData.statusServicos?.lojas?.statusCode }})
+    </li>
+    <li>
+      Função de Mensageria: {{ dashboardData.statusServicos?.funcaoMensageria?.status }}
+      (Status Code: {{ dashboardData.statusServicos?.funcaoMensageria?.statusCode }})
+    </li>
+  </ul>
+
+  <h3>Lojas Cadastradas:</h3>
+  <ul>
+    <li *ngFor="let loja of dashboardData.dadosLojas">
+      ID: {{ loja._id }} - Nome: {{ loja.name }}
+    </li>
+  </ul>
+
+  <pre>{{ dashboardData | json }}</pre> </div>
+
+<router-outlet></router-outlet>
