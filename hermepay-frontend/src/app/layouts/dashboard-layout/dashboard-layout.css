@@ -1,0 +1,84 @@
+/* ----- Estrutura Principal ----- */
+.dashboard-container {
+  display: flex;
+  height: 100vh; /* Altura total da tela */
+}
+
+/* ----- Menu Lateral (Sidebar) ----- */
+.sidebar {
+  width: 240px;
+  background-color: #f4f7fa; /* Um cinza/azul bem claro */
+  border-right: 1px solid #e0e6ed;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar h3 {
+  color: #0072CE; /* Azul do Herme Pay */
+  margin-top: 0;
+  text-align: center;
+}
+
+.nav-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1; /* Empurra o botão de logout para baixo */
+}
+
+.nav-list li {
+  margin: 15px 0;
+}
+
+.nav-list a {
+  text-decoration: none;
+  color: #333;
+  font-size: 16px;
+  display: block;
+  padding: 10px 15px;
+  border-radius: 6px;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.nav-list a:hover {
+  background-color: #e6f1f9;
+}
+
+/* Esta é a classe que 'routerLinkActive' adiciona */
+.nav-list a.active-link {
+  background-color: #0072CE; /* Azul */
+  color: white;
+  font-weight: bold;
+}
+
+.logout-section button {
+  width: 100%;
+  padding: 10px;
+  background-color: #E5333A; /* Vermelho */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* ----- Conteúdo Principal ----- */
+.main-content {
+  flex-grow: 1; /* Ocupa o resto do espaço */
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+}
+
+.main-header {
+  padding: 20px 30px;
+  border-bottom: 1px solid #e0e6ed;
+  background-color: #fff;
+}
+
+.content-area {
+  padding: 30px;
+  overflow-y: auto; /* Adiciona scroll se o conteúdo for muito grande */
+  background-color: #f9fbfd;
+  flex-grow: 1;
+}

@@ -1,0 +1,37 @@
+<h2>Transações</h2>
+<p>Histórico de todas as suas movimentações.</p>
+
+<hr>
+
+<div *ngIf="isLoading">
+  <p>Carregando transações...</p>
+</div>
+
+<div *ngIf="error" style="color: red;">
+  <p>{{ error }}</p>
+</div>
+
+<table *ngIf="!isLoading && transactions.length > 0" class="transactions-table">
+  <thead>
+    <tr>
+      <th>Cliente (Email)</th>
+      <th>Status</th>
+      <th>Valor</th>
+      <th>Data da Transação</th>
+      </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let tx of transactions">
+      <td>{{ tx.payer_email }}</td>
+      <td>
+        <span [class]="'status-' + tx.status">{{ tx.status }}</span>
+      </td>
+      <td>{{ tx.value | currency:'BRL' }}</td>
+      <td>{{ tx.created_at | date:'dd/MM/yyyy HH:mm' }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<div *ngIf="!isLoading && transactions.length === 0 && !error">
+  <p>Nenhuma transação encontrada.</p>
+</div>

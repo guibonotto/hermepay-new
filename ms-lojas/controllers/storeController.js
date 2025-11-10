@@ -113,3 +113,67 @@ exports.deleteStore = async (req, res) => {
         res.status(500).json({ message: 'Erro ao deletar loja', error: error.message });
     }
 };
+// LISTAR contas bancárias de UMA loja
+exports.getBankAccounts = async (req, res) => {
+    try {
+        const { id } = req.params; // Pega o ID da loja pela URL
+
+        // Busca a loja pelo ID e seleciona *apenas* o campo bankAccounts
+        const store = await Store.findById(id).select('bankAccounts');
+
+        if (!store) {
+            return res.status(404).json({ message: 'Loja não encontrada.' });
+        }
+
+        // Retorna a lista de contas bancárias
+        res.status(200).json(store.bankAccounts);
+
+    } catch (error) {
+        res.status(500).json({ message: 'Erro ao buscar contas bancárias', error: error.message });
+    }
+};
+
+// ADICIONAR uma nova conta bancária a UMA loja
+exports.addBankAccount = async (req, res) => {
+    try {
+        const { id } = req.params; // Pega o ID da loja pela URL
+        
+        // Pega os dados da nova conta do corpo da requisição
+        const { ownerName, bankName, agency, accountNumber, accountType } = req.body;
+
+        // Validação básica
+        if (!ownerName || !bankName || !agency || !accountNumber || !accountType) {
+            return res.status(400).json({ message: 'Todos os campos da conta são obrigatórios.' });
+        }
+
+        const newAccount = {
+            ownerName,
+            bankName,
+            agency,
+            accountNumber,
+            accountType
+        };
+
+        // Encontra a loja pelo ID e "empurra" (push) a nova conta para o array bankAccounts
+        // { new: true } garante que ele retorne a loja *depois* de atualizada
+        const updatedStore = await Store.findByIdAndUpdate(
+            id,
+            { $push: { bankAccounts: newAccount } }, // O comando Mágico do MongoDB!
+            { new: true, runValidators: true }
+        );
+
+        if (!updatedStore) {
+            return res.status(404).json({ message: 'Loja não encontrada.' });
+        }
+
+        // Retorna a conta recém-criada (a última do array)
+        res.status(201).json(updatedStore.bankAccounts.pop());
+
+    } catch (error) {
+        // Se a validação do Mongoose falhar (ex: 'accountType' inválido)
+        if (error.name === 'ValidationError') {
+            return res.status(400).json({ message: 'Erro de validação', error: error.message });
+        }
+        res.status(500).json({ message: 'Erro ao adicionar conta bancária', error: error.message });
+    }
+};

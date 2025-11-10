@@ -1,0 +1,25 @@
+
+1.  **BFF (Porta `3000`):**
+    * Pasta: `cd bff-node`
+    * Comando: `npm run dev`
+
+2.  **MS-Lojas (Porta `3001`):**
+    * Pasta: `cd ms-lojas`
+    * Comando: `npm run dev`
+
+3.  **MS-Transações (Porta `3002`):**
+    * Pasta: `cd ms-transacoes`
+    * Comando: `npm run dev`
+
+4.  **Function 1 (Mensageiro) (Porta `7071`):**
+    * Pasta: `cd function-http-trigger`
+    * Comando: `func start`
+
+5.  **Function 2 (Trabalhador) (Porta `7072`):**
+    * Pasta: `cd function-event-trigger`
+    * Comando: `func start --port 7072` (Necessário para não dar conflito com a Function 1)
+
+6.  **Frontend (Angular) (Porta `4200`):**
+    * Pasta: `cd hermepay-frontend`
+    * Comando: `ng serve --open`
+

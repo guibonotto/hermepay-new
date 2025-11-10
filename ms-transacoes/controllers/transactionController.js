@@ -121,3 +121,42 @@ exports.deleteTransaction = async (req, res) => {
         res.status(500).json({ message: 'Erro ao deletar transação', error: error.message });
     }
 };
+exports.getTransactionStats = async (req, res) => {
+    try {
+        // Consulta SQL para calcular tudo de uma vez
+        // Contamos pedidos, somamos o valor, e filtramos 'approved' e não deletados
+        const query = `
+            SELECT 
+                COUNT(*) AS pedidosPagos,
+                SUM(value) AS totalVendas
+            FROM transactions
+            WHERE status = 'approved' AND deletedAt IS NULL;
+        `;
+
+        const { rows } = await runQuery({ log: console, log: { error: console.error } }, query);
+
+        let stats = {
+            pedidosPagos: 0,
+            totalVendas: 0,
+            ticketMedio: 0
+        };
+
+        // Se tivermos resultados, calculamos
+        if (rows.length > 0 && rows[0].pedidosPagos > 0) {
+            const pedidosPagos = parseInt(rows[0].pedidosPagos);
+            const totalVendas = parseFloat(rows[0].totalVendas);
+            const ticketMedio = totalVendas / pedidosPagos;
+
+            stats = {
+                pedidosPagos: pedidosPagos,
+                totalVendas: totalVendas,
+                ticketMedio: parseFloat(ticketMedio.toFixed(2)) // Arredonda para 2 casas decimais
+            };
+        }
+
+        res.status(200).json(stats);
+
+    } catch (error) {
+        res.status(500).json({ message: 'Erro ao buscar estatísticas', error: error.message });
+    }
+};

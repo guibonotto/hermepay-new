@@ -22,6 +22,17 @@ router.put('/:id', storeController.updateStore);
 // DELETE
 router.delete('/:id', storeController.deleteStore);
 
-// ---------------------------
+// GET /api/stores/:id/accounts (Lista contas de uma loja)
+router.get('/:id/accounts', storeController.getBankAccounts);
+
+// POST /api/stores/:id/accounts (Adiciona conta a uma loja)
+router.post('/:id/accounts', storeController.addBankAccount);
+
+// --- ROTAS ANTIGAS ---
+// READ ONE
+router.get('/:id', storeController.getStoreById);
+// ... (o resto das rotas PUT e DELETE)
+
+module.exports = router;
 
 module.exports = router;

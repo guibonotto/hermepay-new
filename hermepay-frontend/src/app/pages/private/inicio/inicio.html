@@ -1,0 +1,29 @@
+<h2>Início</h2>
+<p>Visão geral das suas finanças.</p>
+
+<hr>
+
+<div *ngIf="isLoading">
+  <p>Carregando estatísticas...</p>
+</div>
+
+<div *ngIf="error" style="color: red;">
+  <p>{{ error }}</p>
+</div>
+
+<div *ngIf="stats && !isLoading" class="stats-container">
+  <div class="stat-card">
+    <h3>Total de Vendas</h3>
+    <p>{{ stats.totalVendas | currency:'BRL' }}</p>
+  </div>
+
+  <div class="stat-card">
+    <h3>Pedidos Pagos</h3>
+    <p>{{ stats.pedidosPagos }}</p>
+  </div>
+
+  <div class="stat-card">
+    <h3>Ticket Médio</h3>
+    <p>{{ stats.ticketMedio | currency:'BRL' }}</p>
+  </div>
+</div>

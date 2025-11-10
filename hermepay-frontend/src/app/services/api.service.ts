@@ -20,7 +20,14 @@ export class ApiService {
     // Faz uma requisição GET para http://localhost:3000/api/dashboard
     return this.http.get<any>(`${this.bffUrl}/dashboard`);
   }
-
+  getTransactionStats(): Observable<any> {
+  // Faz uma requisição GET para http://localhost:3000/api/transactions/stats
+  return this.http.get<any>(`${this.bffUrl}/transactions/stats`);
+}
+getTransactions(): Observable<any[]> {
+  // Faz uma requisição GET para http://localhost:3000/api/transactions
+  return this.http.get<any[]>(`${this.bffUrl}/transactions`);
+}
   // Futuramente, adicionaremos métodos para lojas, transações, etc.
   // ex: getStores(): Observable<any> { ... }
   // ex: createStore(data: any): Observable<any> { ... }

@@ -2,30 +2,66 @@
 
 const mongoose = require('mongoose');
 
-// 1. Definição do Schema (a "forma" dos nossos dados)
+// --- 1. NOSSO NOVO SUB-SCHEMA ---
+// Define a estrutura dos dados bancários que você pediu
+const BankAccountSchema = new mongoose.Schema({
+    ownerName: { // Nome do Dono da Conta
+        type: String,
+        required: true,
+        trim: true
+    },
+    bankName: { // Nome do Banco
+        type: String,
+        required: true
+    },
+    agency: { // Agência
+        type: String,
+        required: true
+    },
+    accountNumber: { // Conta
+        type: String,
+        required: true
+    },
+    accountType: { // Tipo de Conta
+        type: String,
+        required: true,
+        enum: ['corrente', 'poupanca'] // Só permite "corrente" ou "poupanca"
+    },
+    status: { // Status
+        type: String,
+        default: 'active' // Já começa como 'active'
+    }
+}, { 
+    timestamps: true // Adiciona createdAt/updatedAt para a conta bancária
+});
+
+
+// --- 2. NOSSO SCHEMA PRINCIPAL (MODIFICADO) ---
 const StoreSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: [true, 'O nome da loja é obrigatório.'], // Equivalente à validação 'required'
-        trim: true // Remove espaços em branco do início e fim
+        required: [true, 'O nome da loja é obrigatório.'],
+        trim: true 
     },
     api_key: {
         type: String,
         required: true,
-        unique: true // Garante que a chave de API seja única no banco
+        unique: true
     },
-    // Implementação do Soft Delete (equivalente ao SoftDeletes do Laravel)
     deletedAt: {
         type: Date,
         default: null
-    }
+    },
+
+    // --- 3. A GRANDE MUDANÇA ---
+    // Adicionamos um array que usará a estrutura do BankAccountSchema
+    bankAccounts: [BankAccountSchema]
+
 }, {
-    // Adiciona automaticamente os campos `createdAt` e `updatedAt` (igual ao timestamps() do Laravel)
     timestamps: true
 });
 
-// 2. Lógica do Soft Delete (para todas as buscas)
-// Isso garante que qualquer comando 'find' ignore os documentos "deletados"
+// Lógica do Soft Delete
 StoreSchema.pre('find', function() {
     this.where({ deletedAt: null });
 });
@@ -33,6 +69,4 @@ StoreSchema.pre('findOne', function() {
     this.where({ deletedAt: null });
 });
 
-// 3. Criar e exportar o Model
-// O Mongoose pegará o nome 'Store' e o transformará no nome da coleção 'stores' no MongoDB
 module.exports = mongoose.model('Store', StoreSchema);

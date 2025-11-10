@@ -1,0 +1,22 @@
+landing page 
+login
+cadastro
+dashboard contendo um menu contendo as seguintes abas
+
+INICIO ( MOSTRAR TABELA EM GRÁFICO CONTENDO ---- $TOTAL DE VENDAS | QUANT DE PEDIDOS PAGOS E TICKET MEDIO)
+TRANSAÇÕES ( MOSTRAR CLIENTE |FORMA DE PAGAMENTO |STATUS |PRODUTO | DATA DA TRANSAÇÃO | DATA DE PAGAMENTO)
+RECEBIMENTOS ( CADASTRAR NOME DO DONO DA CONTA | AGENCIA - CONTA - NOME DO BANCO - TIPO DE CONTA ( CORRENTE OU OUTRO TIPO) - STATUS )
+CONFIGURAÇÕES {
+    
+Sua empresa ( colocar arquivos (contrato social - documento(  e cnh - frente e verso) selfie ))
+
+Taxas e pagamentos ( PÁGINA INFORMANDO QUANTO DE TAXA COBRAMOS )
+
+Usuários ( MOSTRAR INFORMAÇÕES DA CONTA - COM UM BOTÃO DE DELETAR CONTA - E ADICIONAR CONTA)
+
+Credenciais de API - chaev secreta - chave pública
+
+Webhooks - página para inserir URL webhook 
+
+}
+

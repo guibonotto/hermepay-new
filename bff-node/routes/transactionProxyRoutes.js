@@ -30,6 +30,25 @@ router.get('/', async (req, res) => {
         res.status(error.response.status).json(error.response.data);
     }
 });
+    router.get('/stats', async (req, res) => {
+    try {
+        const response = await axios.get(`${TRANSACOES_API_URL}/api/transactions/stats`);
+        res.status(response.status).json(response.data);
+    } catch (error) {
+        res.status(error.response.status).json(error.response.data);
+    }
+});
+
+// Rota 3: READ ONE (GET /:id)
+router.get('/stats', async (req, res) => {
+    try {
+        const response = await axios.get(`${TRANSACOES_API_URL}/api/transactions/stats`);
+        res.status(response.status).json(response.data);
+    } catch (error) {
+        res.status(error.response.status).json(error.response.data);
+    }
+});
+
 
 // Rota 3: READ ONE (GET /api/transactions/:id)
 router.get('/:id', async (req, res) => {

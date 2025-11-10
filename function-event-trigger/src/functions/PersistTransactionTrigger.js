@@ -14,7 +14,7 @@ app.serviceBusTopic('PersistTransactionTrigger', {
         const transactionData = serviceBusMessage;
         context.log('Dados recebidos:', transactionData);
 
-        if (!transactionData || !transactionData.value || !transactionData.store_id) {
+       if (!transactionData || !transactionData.value || !transactionData.store_id || !transactionData.status) {
             // CORREÇÃO AQUI
             context.error('Mensagem do Service Bus inválida ou incompleta.');
             return; 
@@ -76,8 +76,8 @@ app.serviceBusTopic('PersistTransactionTrigger', {
 
         function executeStatement(resolve, reject) {
             const request = new Request(`
-                INSERT INTO transactions (store_id, payer_email, value) 
-                VALUES (@store_id, @payer_email, @value);
+                INSERT INTO transactions (store_id, payer_email, value, status) 
+                    VALUES (@store_id, @payer_email, @value, @status);
             `, (err) => {
                 if (err) {
                     // CORREÇÃO AQUI
@@ -93,6 +93,7 @@ app.serviceBusTopic('PersistTransactionTrigger', {
             request.addParameter('store_id', TYPES.Int, transactionData.store_id);
             request.addParameter('payer_email', TYPES.VarChar, transactionData.payer_email);
             request.addParameter('value', TYPES.Decimal, transactionData.value);
+            request.addParameter('status', TYPES.VarChar, transactionData.status); 
 
             connection.execSql(request);
         }

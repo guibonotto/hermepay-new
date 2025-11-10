@@ -1,0 +1,33 @@
+.transactions-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.transactions-table th,
+.transactions-table td {
+  border: 1px solid #e0e6ed;
+  padding: 12px 15px;
+  text-align: left;
+}
+
+.transactions-table th {
+  background-color: #f4f7fa;
+  font-weight: 600;
+}
+
+.transactions-table tbody tr:nth-of-type(even) {
+  background-color: #f9fbfd;
+}
+
+/* Estilos para o Status */
+.status-approved {
+  color: #36A84C; /* Verde */
+  font-weight: bold;
+}
+
+.status-failed {
+  color: #E5333A; /* Vermelho */
+  font-weight: bold;
+}
