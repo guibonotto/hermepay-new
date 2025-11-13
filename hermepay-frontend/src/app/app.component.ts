@@ -1,15 +1,19 @@
-// src/app/app.component.ts
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router'; // Só precisa do RouterOutlet
+// src/app/app.ts
+import { Component, inject } from '@angular/core';
+import { RouterOutlet, RouterLink } from '@angular/router'; // Adicione RouterLink
+import { CommonModule } from '@angular/common'; // Adicione CommonModule
+import { AuthService } from './services/auth'; // Importe o AuthService
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet], // Só precisa do RouterOutlet
-  templateUrl: './app.html', // (ou .component.html)
-  styleUrl: './app.css'     // (ou .component.css)
+  imports: [RouterOutlet, RouterLink, CommonModule], // Adicione RouterLink e CommonModule
+  templateUrl: './app.html', 
+  styleUrl: './app.css'     
 })
 export class AppComponent {
   title = 'hermepay-frontend';
-  // TODA a lógica de carregar dashboard foi REMOVIDA daqui.
+  
+  // Injeta o serviço de autenticação
+  authService = inject(AuthService);
 }

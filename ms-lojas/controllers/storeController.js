@@ -68,18 +68,23 @@ exports.getStoreById = async (req, res) => {
 exports.updateStore = async (req, res) => {
     try {
         const { id } = req.params;
-        const { name } = req.body; // Por enquanto, só permitimos atualizar o nome
+        
+        // 1. Pega os dados que queremos atualizar do body
+        // (ex: name, cnpj, razaoSocial, endereco)
+        const updates = req.body;
 
-        if (!name) {
-            return res.status(400).json({ message: 'O nome é obrigatório.' });
+        // 2. Validação: Não permite que a api_key seja alterada por esta rota
+        if (updates.api_key) {
+            delete updates.api_key;
         }
 
-        // 1. Busca e atualiza o documento ao mesmo tempo
-        // { new: true } garante que ele retorne o documento *depois* de atualizado
+        // 3. Busca e atualiza o documento ao mesmo tempo
+        // O Mongoose é inteligente o suficiente para atualizar
+        // apenas os campos enviados em 'updates'.
         const updatedStore = await Store.findByIdAndUpdate(
             id,
-            { name: name },
-            { new: true, runValidators: true } // runValidators força a checagem do schema
+            { $set: updates }, // Usa $set para atualizar os campos
+            { new: true, runValidators: true } 
         );
 
         if (!updatedStore) {
@@ -175,5 +180,123 @@ exports.addBankAccount = async (req, res) => {
             return res.status(400).json({ message: 'Erro de validação', error: error.message });
         }
         res.status(500).json({ message: 'Erro ao adicionar conta bancária', error: error.message });
+    }
+};
+// Adicione 'async' aqui
+exports.getBankAccounts = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const store = await Store.findById(id).select('bankAccounts'); // <-- Agora funciona
+
+        if (!store) {
+            return res.status(404).json({ message: 'Loja não encontrada.' });
+        }
+        res.status(200).json(store.bankAccounts);
+    } catch (error) {
+        res.status(500).json({ message: 'Erro ao buscar contas bancárias', error: error.message });
+    }
+};
+
+// E adicione 'async' aqui também
+exports.addBankAccount = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { ownerName, bankName, agency, accountNumber, accountType } = req.body;
+
+        if (!ownerName || !bankName || !agency || !accountNumber || !accountType) {
+            return res.status(400).json({ message: 'Todos os campos da conta são obrigatórios.' });
+        }
+
+        const newAccount = {
+            ownerName,
+            bankName,
+            agency,
+            accountNumber,
+            accountType
+        };
+
+        const updatedStore = await Store.findByIdAndUpdate( // <-- Agora funciona
+            id,
+            { $push: { bankAccounts: newAccount } },
+            { new: true, runValidators: true }
+        );
+
+        if (!updatedStore) {
+            return res.status(404).json({ message: 'Loja não encontrada.' });
+        }
+       // Pega a conta recém-criada (que é a última no array)
+res.status(201).json(newAccount);
+    } catch (error) {
+        if (error.name === 'ValidationError') {
+            return res.status(400).json({ message: 'Erro de validação', error: error.message });
+        }
+        res.status(500).json({ message: 'Erro ao adicionar conta bancária', error: error.message });
+    }
+};
+// DELETAR uma conta bancária de UMA loja
+exports.deleteBankAccount = async (req, res) => {
+    try {
+        // Pegamos o ID da Loja e o ID da Conta
+        const { id: storeId, accountId } = req.params;
+
+        // Encontra a loja e "puxa" (pull) a conta para fora do array bankAccounts
+        // O $pull do MongoDB remove um item de um array baseado em uma condição (o _id da sub-conta)
+        const updatedStore = await Store.findByIdAndUpdate(
+            storeId,
+            { $pull: { bankAccounts: { _id: accountId } } },
+            { new: true }
+        );
+
+        if (!updatedStore) {
+            return res.status(404).json({ message: 'Loja não encontrada.' });
+        }
+
+        res.status(200).json({ message: 'Conta bancária deletada com sucesso.' });
+
+    } catch (error) {
+        res.status(500).json({ message: 'Erro ao deletar conta bancária', error: error.message });
+    }
+};
+exports.getWebhooks = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const store = await Store.findById(id).select('webhooks');
+
+        if (!store) {
+            return res.status(404).json({ message: 'Loja não encontrada.' });
+        }
+        res.status(200).json(store.webhooks);
+
+    } catch (error) {
+        res.status(500).json({ message: 'Erro ao buscar webhooks', error: error.message });
+    }
+};
+
+// ADICIONAR um novo webhook a UMA loja
+exports.addWebhook = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { url } = req.body; // Pega a URL do corpo
+
+        if (!url) { // Validação básica
+            return res.status(400).json({ message: 'A URL do webhook é obrigatória.' });
+        }
+
+        const newWebhook = { url };
+
+        const updatedStore = await Store.findByIdAndUpdate(
+            id,
+            { $push: { webhooks: newWebhook } }, // "Empurra" o novo webhook para o array
+            { new: true, runValidators: true }
+        );
+
+        if (!updatedStore) {
+            return res.status(404).json({ message: 'Loja não encontrada.' });
+        }
+
+     res.status(201).json(newWebhook);
+
+    } catch (error) {
+        res.status(500).json({ message: 'Erro ao adicionar webhook', error: error.message });
     }
 };

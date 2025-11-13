@@ -1,0 +1,39 @@
+/* Reutilizando estilos de card e input */
+.config-card {
+  background-color: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+}
+
+h3 { color: #0072CE; margin-top: 0; }
+h4 { color: #444; margin-top: 0; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+p { color: #666; }
+hr { border: 0; border-top: 1px solid #eee; margin: 30px 0; }
+
+/* Input e Botão */
+label { display: block; margin-bottom: 5px; font-weight: 500; }
+input {
+  width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;
+  box-sizing: border-box;
+}
+input:focus { border-color: #0072CE; outline: none; }
+
+button {
+  margin-top: 15px; padding: 10px 20px; background: #0072CE; color: white;
+  border: none; border-radius: 6px; font-weight: 600; cursor: pointer;
+}
+button:disabled { background: #ccc; }
+
+/* Tabela */
+.custom-table {
+  width: 100%; border-collapse: collapse; background: white;
+  border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.custom-table th { background: #f4f7fa; color: #555; font-weight: 600; text-align: left; padding: 12px 15px; }
+.custom-table td { padding: 12px 15px; border-bottom: 1px solid #f0f0f0; color: #333; }
+.url-cell { font-family: monospace; color: #0072CE; }
+
+/* Badge */
+.badge.active { background: #def7ec; color: #03543f; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; }

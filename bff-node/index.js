@@ -6,6 +6,7 @@ const cors = require('cors'); // 1. Importe o pacote cors
 const storeProxyRoutes = require('./routes/storeProxyRoutes');
 const transactionProxyRoutes = require('./routes/transactionProxyRoutes');
 const aggregatorRoutes = require('./routes/aggregatorRoutes');
+const authProxyRoutes = require('./routes/authProxyRoutes');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -27,6 +28,7 @@ app.get('/', (req, res) => {
 app.use('/api/stores', storeProxyRoutes);
 app.use('/api/transactions', transactionProxyRoutes);
 app.use('/api', aggregatorRoutes);
+app.use('/api/auth', authProxyRoutes);
 
 app.listen(port, () => {
     console.log(`BFF está rodando com sucesso na porta ${port}`);

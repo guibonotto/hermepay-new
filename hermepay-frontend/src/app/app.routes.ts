@@ -21,6 +21,8 @@ import { ConfigUsuariosComponent } from './pages/private/configuracoes/config-us
 import { ConfigCredenciaisComponent } from './pages/private/configuracoes/config-credenciais/config-credenciais';
 import { ConfigWebhooksComponent } from './pages/private/configuracoes/config-webhooks/config-webhooks';
 
+import { authGuard } from './services/auth';
+
 export const routes: Routes = [
   
   // --- ROTAS PÚBLICAS ---
@@ -32,6 +34,7 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardLayoutComponent,
+    canActivate: [authGuard],
     children: [
       { path: '', redirectTo: 'inicio', pathMatch: 'full' },
       { path: 'inicio', component: InicioComponent },
@@ -51,6 +54,7 @@ export const routes: Routes = [
       },
     ]
   },
+  
 
   // --- ROTA PADRÃO ---
   { path: '', redirectTo: '/landing', pathMatch: 'full' },

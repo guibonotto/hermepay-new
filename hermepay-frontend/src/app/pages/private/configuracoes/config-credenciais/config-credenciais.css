@@ -1,0 +1,58 @@
+.config-card {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  max-width: 700px;
+}
+
+h3 { color: #0072CE; margin-top: 0; }
+p { color: #666; margin-bottom: 25px; }
+
+.form-field { margin-bottom: 25px; }
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #333;
+}
+
+.input-group {
+  display: flex;
+  gap: 10px;
+}
+
+input {
+  flex-grow: 1;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  background-color: #f9f9f9;
+  color: #555;
+  font-family: monospace; /* Fonte monoespaçada fica melhor para chaves */
+}
+
+.btn-copy {
+  padding: 0 20px;
+  background-color: #e6f1f9;
+  color: #0072CE;
+  border: 1px solid #b3d7f2;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-copy:hover {
+  background-color: #0072CE;
+  color: white;
+}
+
+.hint {
+  display: block;
+  margin-top: 5px;
+  color: #888;
+  font-size: 12px;
+}

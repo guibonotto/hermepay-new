@@ -31,3 +31,29 @@
   color: #E5333A; /* Vermelho */
   font-weight: bold;
 }
+/* Estilo da lista de produtos dentro da célula */
+.product-list {
+  font-size: 13px;
+  color: #555;
+}
+
+.product-item {
+  margin-bottom: 2px;
+  white-space: nowrap; /* Evita que o texto quebre linha feio */
+}
+
+.product-item .qty {
+  font-weight: bold;
+  color: #0072CE;
+  margin-right: 4px;
+}
+
+.no-products {
+  color: #aaa;
+  text-align: center;
+}
+
+/* Ajuste para a tabela não ficar muito apertada */
+.transactions-table td {
+  vertical-align: top; /* Alinha o texto no topo da célula */
+}

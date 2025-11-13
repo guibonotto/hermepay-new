@@ -12,11 +12,12 @@
 </div>
 
 <div *ngIf="stats && !isLoading" class="stats-container">
+  
   <div class="stat-card">
     <h3>Total de Vendas</h3>
     <p>{{ stats.totalVendas | currency:'BRL' }}</p>
   </div>
-
+  
   <div class="stat-card">
     <h3>Pedidos Pagos</h3>
     <p>{{ stats.pedidosPagos }}</p>
@@ -26,4 +27,5 @@
     <h3>Ticket Médio</h3>
     <p>{{ stats.ticketMedio | currency:'BRL' }}</p>
   </div>
+
 </div>

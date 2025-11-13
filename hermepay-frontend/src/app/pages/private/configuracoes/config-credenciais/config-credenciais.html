@@ -1,1 +1,28 @@
-<p>config-credenciais works!</p>
+<h3>Credenciais de API</h3>
+<p>Suas chaves para integrar o Herme Pay em outras aplicações.</p>
+
+<div *ngIf="isLoading">
+  <p>Carregando...</p>
+</div>
+
+<div *ngIf="storeData && !isLoading" class="config-card">
+  
+  <div class="form-field">
+    <label>Chave Pública (Public Key)</label>
+    <div class="input-group">
+      <input type="text" [value]="storeData._id" readonly>
+      <button class="btn-copy" (click)="copyToClipboard(storeData._id)">Copiar</button>
+    </div>
+    <small class="hint">Use esta chave no seu frontend ou configurações públicas.</small>
+  </div>
+
+  <div class="form-field">
+    <label>Chave Secreta (API Key)</label>
+    <div class="input-group">
+      <input type="password" [value]="storeData.api_key" readonly>
+      <button class="btn-copy" (click)="copyToClipboard(storeData.api_key)">Copiar</button>
+    </div>
+    <small class="hint">Mantenha esta chave segura! Nunca a compartilhe em locais públicos.</small>
+  </div>
+
+</div>

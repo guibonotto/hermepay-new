@@ -1,0 +1,137 @@
+/* Fundo da tela inteira */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Ocupa toda a altura da tela */
+  background-color: #f4f7fa;
+  padding: 20px;
+}
+
+/* O Cartão branco centralizado */
+.auth-box {
+  background-color: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 450px; /* Largura máxima */
+}
+
+.auth-title {
+  text-align: center;
+  color: #0072CE;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.auth-subtitle {
+  text-align: center;
+  color: #666;
+  margin-bottom: 30px;
+  font-size: 15px;
+}
+
+/* Estilo dos Campos */
+.form-field {
+  margin-bottom: 20px;
+}
+
+.form-field label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+}
+
+.form-field input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+  box-sizing: border-box; /* Importante para o padding não quebrar o layout */
+  transition: border-color 0.3s;
+}
+
+.form-field input:focus {
+  border-color: #0072CE;
+  outline: none;
+}
+
+/* Validação Visual (Borda Vermelha) */
+.form-field input.invalid {
+  border-color: #E5333A;
+  background-color: #fff8f8;
+}
+
+.error-text {
+  color: #E5333A;
+  font-size: 12px;
+  margin-top: 5px;
+  display: block;
+}
+
+/* Botão de Enviar */
+.btn-submit {
+  width: 100%;
+  padding: 14px;
+  background-color: #0072CE;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 10px;
+}
+
+.btn-submit:hover {
+  background-color: #005bb5;
+}
+
+.btn-submit:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Alertas de Sucesso/Erro */
+.alert {
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.alert-error {
+  background-color: #ffebee;
+  color: #c62828;
+  border: 1px solid #ffcdd2;
+}
+
+.alert-success {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #c8e6c9;
+}
+
+/* Rodapé (Link para Login) */
+.auth-footer {
+  text-align: center;
+  margin-top: 25px;
+  font-size: 14px;
+  color: #666;
+}
+
+.auth-footer a {
+  color: #0072CE;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.auth-footer a:hover {
+  text-decoration: underline;
+}

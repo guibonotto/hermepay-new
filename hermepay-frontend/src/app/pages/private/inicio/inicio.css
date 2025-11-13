@@ -1,0 +1,53 @@
+/* Container que segura os cartões */
+.stats-container {
+  display: flex; /* Coloca os itens lado a lado */
+  gap: 24px; /* Espaço entre os cartões */
+  margin-top: 30px;
+  flex-wrap: wrap; /* Permite quebrar linha em telas pequenas */
+}
+
+/* O design de cada Cartão */
+.stat-card {
+  background-color: #ffffff;
+  flex: 1; /* Faz todos crescerem igualmente */
+  min-width: 200px; /* Largura mínima */
+  padding: 25px;
+  border-radius: 12px; /* Bordas arredondadas */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Sombra suave */
+  border-left: 5px solid #0072CE; /* Detalhe azul na esquerda */
+  transition: transform 0.2s; /* Animação suave ao passar o mouse */
+}
+
+/* Efeito ao passar o mouse */
+.stat-card:hover {
+  transform: translateY(-5px); /* Sobe um pouquinho */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* O Título do Cartão (ex: Total de Vendas) */
+.stat-card h3 {
+  margin: 0 0 10px 0;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #777; /* Cinza mais claro */
+  font-weight: 600;
+}
+
+/* O Valor do Cartão (ex: R$ 573.00) */
+.stat-card p {
+  margin: 0;
+  font-size: 32px; /* Letra bem grande */
+  font-weight: 700;
+  color: #333; /* Cinza escuro */
+}
+
+/* Títulos da Página */
+h2 {
+  color: #333;
+  margin-bottom: 5px;
+}
+
+p {
+  color: #666;
+}

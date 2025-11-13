@@ -1,1 +1,95 @@
-<p>config-empresa works!</p>
+<h3>Sua Empresa</h3>
+<p>Informações legais e de endereço da sua loja.</p>
+
+<div *ngIf="isLoading">
+  <p>Carregando...</p>
+</div>
+
+<div *ngIf="successMessage" class="success-message">
+  {{ successMessage }}
+</div>
+
+<div class="company-container" *ngIf="!isLoading && !error">
+  
+  <form [formGroup]="companyForm" (ngSubmit)="onSubmit()">
+    
+    <h4>Dados Principais</h4>
+    
+    <div class="form-row">
+      <div class="form-col">
+        <label for="razaoSocial">Razão Social</label>
+        <input id="razaoSocial" formControlName="razaoSocial" placeholder="Minha Loja LTDA"
+               [class.invalid]="companyForm.get('razaoSocial')?.invalid && companyForm.get('razaoSocial')?.touched">
+        <small *ngIf="companyForm.get('razaoSocial')?.invalid && companyForm.get('razaoSocial')?.touched" class="error-text">
+          Razão social é obrigatória.
+        </small>
+      </div>
+      
+      <div class="form-col medium">
+        <label for="cnpj">CNPJ</label>
+        <input id="cnpj" formControlName="cnpj" placeholder="00.000.000/0001-00"
+               [class.invalid]="companyForm.get('cnpj')?.invalid && companyForm.get('cnpj')?.touched">
+        <small *ngIf="companyForm.get('cnpj')?.hasError('pattern') && companyForm.get('cnpj')?.touched" class="error-text">
+          Formato inválido (Use pontos e traço).
+        </small>
+      </div>
+    </div>
+
+    <div formGroupName="endereco">
+      <h4>Endereço</h4>
+      
+      <div class="form-row">
+        <div class="form-col medium">
+          <label for="cep">CEP</label>
+          <input id="cep" formControlName="cep" placeholder="00000-000"
+                 [class.invalid]="companyForm.get('endereco.cep')?.invalid && companyForm.get('endereco.cep')?.touched">
+          <small *ngIf="companyForm.get('endereco.cep')?.hasError('pattern')" class="error-text">
+            Formato 00000-000.
+          </small>
+        </div>
+        <div class="form-col">
+          <label for="logradouro">Logradouro</label>
+          <input id="logradouro" formControlName="logradouro" placeholder="Rua, Avenida..."
+                 [class.invalid]="companyForm.get('endereco.logradouro')?.invalid && companyForm.get('endereco.logradouro')?.touched">
+        </div>
+        <div class="form-col small">
+          <label for="numero">Número</label>
+          <input id="numero" formControlName="numero"
+                 [class.invalid]="companyForm.get('endereco.numero')?.invalid && companyForm.get('endereco.numero')?.touched">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-col">
+          <label for="complemento">Complemento</label>
+          <input id="complemento" formControlName="complemento" placeholder="Apto, Sala...">
+        </div>
+        <div class="form-col">
+          <label for="bairro">Bairro</label>
+          <input id="bairro" formControlName="bairro"
+                 [class.invalid]="companyForm.get('endereco.bairro')?.invalid && companyForm.get('endereco.bairro')?.touched">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-col">
+          <label for="cidade">Cidade</label>
+          <input id="cidade" formControlName="cidade"
+                 [class.invalid]="companyForm.get('endereco.cidade')?.invalid && companyForm.get('endereco.cidade')?.touched">
+        </div>
+        <div class="form-col small">
+          <label for="estado">UF</label>
+          <input id="estado" formControlName="estado" placeholder="SP" maxlength="2"
+                 [class.invalid]="companyForm.get('endereco.estado')?.invalid && companyForm.get('endereco.estado')?.touched">
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="companyForm.invalid">Salvar Alterações</button>
+    
+    <div *ngIf="error" class="error-message">
+      {{ error }}
+    </div>
+
+  </form>
+</div>

@@ -1,38 +1,30 @@
 // routes/storeRoutes.js
-
 const express = require('express');
 const router = express.Router();
 const storeController = require('../controllers/storeController');
 
-// CREATE
+// --- ROTAS GERAIS (sem /:id) ---
+// (Estas podem vir primeiro)
 router.post('/', storeController.createStore);
-
-// READ ALL
 router.get('/', storeController.getAllStores);
 
-// --- NOSSAS NOVAS ROTAS ---
-
-// READ ONE
-// :id é um parâmetro de URL (equivalente ao {store} do Laravel)
-router.get('/:id', storeController.getStoreById);
-
-// UPDATE
-router.put('/:id', storeController.updateStore);
-
-// DELETE
-router.delete('/:id', storeController.deleteStore);
-
-// GET /api/stores/:id/accounts (Lista contas de uma loja)
+// --- ROTAS ESPECÍFICAS (com /accounts) ---
+// *DEVEM vir antes das rotas '/:id' genéricas*
 router.get('/:id/accounts', storeController.getBankAccounts);
-
-// POST /api/stores/:id/accounts (Adiciona conta a uma loja)
 router.post('/:id/accounts', storeController.addBankAccount);
 
-// --- ROTAS ANTIGAS ---
-// READ ONE
-router.get('/:id', storeController.getStoreById);
-// ... (o resto das rotas PUT e DELETE)
+// --- NOSSA NOVA ROTA DELETE ---
+// :id é o storeId, :accountId é o ID da conta a ser deletada
+router.delete('/:id/accounts/:accountId', storeController.deleteBankAccount);
 
-module.exports = router;
+// --- NOVAS ROTAS DE WEBHOOKS ---
+router.get('/:id/webhooks', storeController.getWebhooks);
+router.post('/:id/webhooks', storeController.addWebhook);
+
+// --- ROTAS GENÉRICAS DE LOJA (com /:id) ---
+// *DEVEM vir por último*
+router.get('/:id', storeController.getStoreById);
+router.put('/:id', storeController.updateStore);
+router.delete('/:id', storeController.deleteStore);
 
 module.exports = router;

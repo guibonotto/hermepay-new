@@ -1,1 +1,103 @@
-<p>recebimentos works!</p>
+<h2>Recebimentos</h2>
+<p>Cadastre e gerencie suas contas bancárias para recebimento.</p>
+
+<hr>
+
+<div class="form-container">
+  <h3>Cadastrar Nova Conta</h3>
+  
+  <form [formGroup]="accountForm" (ngSubmit)="onSubmit()">
+    
+    <div class="form-field">
+      <label for="ownerName">Nome do Dono da Conta:</label>
+      <input id="ownerName" formControlName="ownerName" placeholder="Nome completo">
+      <small *ngIf="accountForm.get('ownerName')?.invalid && accountForm.get('ownerName')?.touched" class="error-text">
+        Nome é obrigatório.
+      </small>
+    </div>
+
+    <div class="form-field">
+      <label for="bankName">Banco:</label>
+      <select id="bankName" formControlName="bankName">
+        <option value="" disabled>Selecione um banco</option>
+        <option *ngFor="let bank of banksList" [value]="bank.name">
+          {{ bank.code }} - {{ bank.name }}
+        </option>
+      </select>
+      <small *ngIf="accountForm.get('bankName')?.invalid && accountForm.get('bankName')?.touched" class="error-text">
+        Selecione um banco.
+      </small>
+    </div>
+
+    <div class="form-group-row"> 
+      <div class="form-field">
+        <label for="agency">Agência (sem dígito):</label>
+        <input id="agency" formControlName="agency" placeholder="0000" maxlength="4">
+        <small *ngIf="accountForm.get('agency')?.hasError('pattern') && accountForm.get('agency')?.touched" class="error-text">
+          A agência deve ter exatamente 4 números.
+        </small>
+      </div>
+
+      <div class="form-field">
+        <label for="accountNumber">Conta (com dígito):</label>
+        <input id="accountNumber" formControlName="accountNumber" placeholder="12345-6">
+        <small *ngIf="accountForm.get('accountNumber')?.hasError('pattern') && accountForm.get('accountNumber')?.touched" class="error-text">
+          Formato inválido. Use o formato 12345-6.
+        </small>
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label for="accountType">Tipo de Conta:</label>
+      <select id="accountType" formControlName="accountType">
+        <option value="corrente">Corrente</option>
+        <option value="poupanca">Poupança</option>
+      </select>
+    </div>
+
+    <button type="submit" [disabled]="accountForm.invalid">Salvar Conta</button>
+    
+    <div *ngIf="error" class="error-message">{{ error }}</div>
+  </form>
+</div>
+
+<hr>
+
+<h3>Contas Cadastradas</h3>
+
+<div *ngIf="isLoading">
+  <p>Carregando contas...</p>
+</div>
+
+<table *ngIf="!isLoading && bankAccounts && bankAccounts.length > 0" class="accounts-table">
+  <thead>
+    <tr>
+      <th>Dono da Conta</th>
+      <th>Banco</th>
+      <th>Agência</th>
+      <th>Conta</th>
+      <th>Tipo</th>
+      <th>Status</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let acc of bankAccounts">
+      <td>{{ acc.ownerName }}</td>
+      <td>{{ acc.bankName }}</td>
+      <td>{{ acc.agency }}</td>
+      <td>{{ acc.accountNumber }}</td>
+      <td>{{ acc.accountType }}</td>
+      <td>
+        <span [class]="'status-' + acc.status">{{ acc.status }}</span>
+      </td>
+      <td>
+        <button (click)="onDelete(acc._id)" class="btn-delete">Deletar</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div *ngIf="!isLoading && (!bankAccounts || bankAccounts.length === 0) && !error">
+  <p>Nenhuma conta bancária cadastrada.</p>
+</div>

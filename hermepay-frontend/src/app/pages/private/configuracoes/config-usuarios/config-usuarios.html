@@ -1,1 +1,28 @@
-<p>config-usuarios works!</p>
+<h3>Usuários da Conta</h3>
+<p>Gerencie seu perfil de acesso.</p>
+
+<div *ngIf="isLoading"><p>Carregando...</p></div>
+
+<div *ngIf="currentUser && !isLoading">
+  
+  <div class="user-card">
+    <div class="avatar-circle">{{ currentUser.name.charAt(0) }}</div>
+    <div class="user-details">
+      <h4>{{ currentUser.name }}</h4>
+      <p class="email">{{ currentUser.email }}</p>
+      <div class="meta-info">
+        <span><strong>ID Usuário:</strong> {{ currentUser._id }}</span>
+        <span><strong>Loja Vinculada:</strong> {{ currentUser.store }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="danger-zone">
+    <div class="danger-text">
+      <h4>Deletar Conta</h4>
+      <p>Esta ação removerá permanentemente sua conta e acesso à loja. Não pode ser desfeita.</p>
+    </div>
+    <button class="btn-danger" (click)="onDeleteAccount()">Deletar Minha Conta</button>
+  </div>
+
+</div>

@@ -34,7 +34,16 @@ const BankAccountSchema = new mongoose.Schema({
 }, { 
     timestamps: true // Adiciona createdAt/updatedAt para a conta bancária
 });
-
+const WebhookSchema = new mongoose.Schema({
+    url: {
+        type: String,
+        required: true
+    },
+    status: {
+        type: String,
+        default: 'active'
+    }
+}, { timestamps: true });
 
 // --- 2. NOSSO SCHEMA PRINCIPAL (MODIFICADO) ---
 const StoreSchema = new mongoose.Schema({
@@ -51,6 +60,23 @@ const StoreSchema = new mongoose.Schema({
     deletedAt: {
         type: Date,
         default: null
+    },
+    cnpj: {
+        type: String,
+        trim: true
+    },
+    razaoSocial: { // Razão Social
+        type: String,
+        trim: true
+    },
+    endereco: { // Endereço
+        logradouro: String,
+        numero: String,
+        complemento: String,
+        bairro: String,
+        cidade: String,
+        estado: String,
+        cep: String
     },
 
     // --- 3. A GRANDE MUDANÇA ---

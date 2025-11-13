@@ -1,0 +1,127 @@
+/* --- Layout do Container --- */
+h3 {
+  color: #0072CE;
+  margin-bottom: 5px;
+}
+
+p {
+  color: #666;
+  margin-bottom: 25px;
+}
+
+.company-container {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  max-width: 800px; /* Um pouco mais largo para caber endereços */
+}
+
+h4 {
+  color: #444;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 10px;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* --- Grid e Layout de Campos --- */
+.form-row {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 15px;
+}
+
+.form-col {
+  flex: 1; /* Faz as colunas ocuparem espaço igual */
+}
+
+.form-col.small {
+  flex: 0 0 120px; /* Coluna pequena para Número ou UF */
+}
+
+.form-col.medium {
+  flex: 0 0 200px; /* Coluna média para CEP/CNPJ */
+}
+
+/* --- Estilo dos Inputs --- */
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #333;
+  font-size: 14px;
+}
+
+input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 15px;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+input:focus {
+  border-color: #0072CE;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 114, 206, 0.1);
+}
+
+/* --- Validação Visual --- */
+input.invalid {
+  border-color: #E5333A;
+  background-color: #fff5f5;
+}
+
+.error-text {
+  color: #E5333A;
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
+}
+
+/* --- Botão --- */
+button[type="submit"] {
+  background-color: #0072CE;
+  color: white;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.2s;
+  display: block;
+  width: 100%;
+}
+
+button[type="submit"]:hover {
+  background-color: #005bb5;
+}
+
+button[type="submit"]:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* --- Mensagens de Feedback --- */
+.success-message {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #def7ec;
+  color: #03543f;
+  border-radius: 6px;
+  border: 1px solid #bcf0da;
+}
+
+.error-message {
+  margin-top: 15px;
+  color: #E5333A;
+  text-align: center;
+}

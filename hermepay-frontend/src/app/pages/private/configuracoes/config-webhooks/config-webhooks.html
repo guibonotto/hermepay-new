@@ -1,1 +1,39 @@
-<p>config-webhooks works!</p>
+<h3>Webhooks</h3>
+<p>Cadastre URLs para receber notificações de eventos.</p>
+
+<div class="config-card form-section">
+  <h4>Cadastrar Novo Webhook</h4>
+  <form [formGroup]="webhookForm" (ngSubmit)="onSubmit()">
+    <div class="form-field">
+      <label for="url">URL do Endpoint</label>
+      <input id="url" formControlName="url" placeholder="https://seu-site.com/webhook">
+    </div>
+    <button type="submit" [disabled]="webhookForm.invalid">Salvar Webhook</button>
+    <div *ngIf="error" class="error-message">{{ error }}</div>
+  </form>
+</div>
+
+<hr>
+
+<h4>Webhooks Ativos</h4>
+<div class="table-container">
+  <table *ngIf="!isLoading && webhooks.length > 0" class="custom-table">
+    <thead>
+      <tr>
+        <th>URL</th>
+        <th>Status</th>
+        <th>Data Criação</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let hook of webhooks">
+        <td class="url-cell">{{ hook.url }}</td>
+        <td><span class="badge active">Ativo</span></td> <td>{{ hook.createdAt | date:'dd/MM/yyyy HH:mm' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="!isLoading && webhooks.length === 0" class="empty-state">
+  <p>Nenhum webhook cadastrado.</p>
+</div>

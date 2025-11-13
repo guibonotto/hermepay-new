@@ -1,1 +1,16 @@
-<p>configuracoes works!</p>
+<h2>Configurações</h2>
+<p>Gerencie as configurações da sua conta e integrações.</p>
+
+<div class="config-layout">
+  <nav class="config-nav">
+    <a routerLink="empresa" routerLinkActive="active-sublink">Sua Empresa</a>
+    <a routerLink="taxas" routerLinkActive="active-sublink">Taxas e Pagamentos</a>
+    <a routerLink="usuarios" routerLinkActive="active-sublink">Usuários</a>
+    <a routerLink="credenciais" routerLinkActive="active-sublink">Credenciais de API</a>
+    <a routerLink="webhooks" routerLinkActive="active-sublink">Webhooks</a>
+  </nav>
+
+  <div class="config-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

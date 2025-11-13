@@ -25,9 +25,27 @@ export class TransacoesComponent implements OnInit {
     this.isLoading = true;
     this.apiService.getTransactions().subscribe({
       next: (data) => {
-        this.transactions = data;
+        // AQUI ESTÁ O TRUQUE:
+        // Vamos percorrer cada transação e converter o texto 'products_json'
+        // em um array real 'products'
+        this.transactions = data.map((tx: any) => {
+          let parsedProducts = [];
+          try {
+            if (tx.products_json) {
+              parsedProducts = JSON.parse(tx.products_json);
+            }
+          } catch (e) {
+            console.error('Erro ao fazer parse dos produtos:', e);
+          }
+
+          return {
+            ...tx, // Mantém os dados originais (id, valor, status...)
+            products: parsedProducts // Adiciona o array pronto para uso
+          };
+        });
+
         this.isLoading = false;
-        console.log('Transações carregadas:', data);
+        console.log('Transações processadas:', this.transactions);
       },
       error: (err) => {
         this.error = 'Falha ao carregar transações.';

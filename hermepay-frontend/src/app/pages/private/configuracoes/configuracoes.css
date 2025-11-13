@@ -1,0 +1,37 @@
+.config-layout {
+  display: flex;
+  margin-top: 20px;
+}
+
+/* Menu de Sub-navegação */
+.config-nav {
+  width: 200px;
+  margin-right: 30px;
+  border-right: 1px solid #e0e6ed;
+  padding-right: 20px;
+}
+
+.config-nav a {
+  display: block; /* Faz cada link ocupar uma linha */
+  padding: 10px 15px;
+  text-decoration: none;
+  color: #333;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+
+.config-nav a:hover {
+  background-color: #f4f7fa;
+}
+
+/* Classe do link ativo */
+.config-nav a.active-sublink {
+  background-color: #e6f1f9;
+  color: #0072CE;
+  font-weight: 500;
+}
+
+/* Área de Conteúdo (onde o "works!" estava) */
+.config-content {
+  flex-grow: 1;
+}

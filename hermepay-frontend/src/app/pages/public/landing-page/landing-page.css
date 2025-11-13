@@ -1,0 +1,132 @@
+/* --- Configurações Globais (evita que o menu superior atrapalhe) --- */
+:host {
+  display: block;
+  width: 100%;
+}
+
+/* --- Botões Padrão --- */
+.btn {
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  margin: 5px;
+  border: 2px solid transparent;
+}
+
+.btn-primary {
+  background-color: #0072CE; /* Azul Herme Pay */
+  color: white;
+}
+.btn-primary:hover {
+  background-color: #005aa6;
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: #333;
+  border-color: #e0e6ed;
+}
+.btn-secondary:hover {
+  background-color: #f4f7fa;
+}
+
+/* --- Seção Hero (Principal) --- */
+.hero {
+  background-color: #f4f7fa; /* Fundo cinza/azul claro */
+  padding: 80px 30px;
+  text-align: center;
+  border-bottom: 1px solid #e0e6ed;
+}
+
+.hero-content {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.hero-title {
+  font-size: 48px; /* Aumentei um pouco */
+  color: #333;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-weight: 800; /* Mais negrito */
+  line-height: 1.2;
+}
+
+.hero-subtitle {
+  font-size: 20px;
+  color: #555;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+/* --- Seção de Funcionalidades (Features) --- */
+.features {
+  padding: 60px 30px;
+  text-align: center;
+  background-color: #ffffff;
+}
+
+.features h2 {
+  font-size: 32px;
+  margin-bottom: 40px;
+  color: #333;
+}
+
+.features-grid {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.feature-card {
+  flex-basis: 300px;
+  background-color: #f9fbfd;
+  border: 1px solid #e0e6ed;
+  border-radius: 8px;
+  padding: 25px;
+}
+
+.feature-card h3 {
+  font-size: 20px;
+  color: #0072CE;
+}
+
+.feature-card p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #555;
+}
+
+/* --- Seção CTA (Call to Action) --- */
+.cta {
+  background-color: #0072CE;
+  color: white;
+  padding: 60px 30px;
+  text-align: center;
+}
+
+.cta h2 {
+  font-size: 32px;
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.cta p {
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+.cta .btn-primary {
+  background-color: white;
+  color: #0072CE;
+  font-size: 18px;
+}
+.cta .btn-primary:hover {
+  background-color: #f0f0f0;
+}

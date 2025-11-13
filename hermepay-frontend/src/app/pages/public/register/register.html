@@ -1,1 +1,67 @@
-<p>register works!</p>
+<div class="auth-container">
+  <div class="auth-box">
+    <h2 class="auth-title">Crie sua Conta Herme Pay</h2>
+    <p class="auth-subtitle">Comece a aceitar pagamentos hoje mesmo.</p>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      
+      <div class="form-field">
+        <label for="name">Nome Completo</label>
+        <input 
+          id="name" 
+          type="text" 
+          formControlName="name" 
+          placeholder="Seu nome"
+          [class.invalid]="registerForm.get('name')?.invalid && registerForm.get('name')?.touched"
+        >
+        <small *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched" class="error-text">
+          O nome é obrigatório.
+        </small>
+      </div>
+
+      <div class="form-field">
+        <label for="email">E-mail Corporativo</label>
+        <input 
+          id="email" 
+          type="email" 
+          formControlName="email" 
+          placeholder="voce@seuemail.com"
+          [class.invalid]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
+        >
+        <small *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="error-text">
+          Insira um e-mail válido.
+        </small>
+      </div>
+
+      <div class="form-field">
+        <label for="password">Senha</label>
+        <input 
+          id="password" 
+          type="password" 
+          formControlName="password" 
+          placeholder="Mínimo 6 caracteres"
+          [class.invalid]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
+        >
+        <small *ngIf="registerForm.get('password')?.errors?.['minlength'] && registerForm.get('password')?.touched" class="error-text">
+          A senha deve ter pelo menos 6 caracteres.
+        </small>
+      </div>
+
+      <div *ngIf="error" class="alert alert-error">
+        {{ error }}
+      </div>
+
+      <div *ngIf="successMessage" class="alert alert-success">
+        {{ successMessage }}
+      </div>
+
+      <button type="submit" class="btn-submit" [disabled]="registerForm.invalid">
+        Criar Conta Grátis
+      </button>
+    </form>
+    
+    <div class="auth-footer">
+      <p>Já tem uma conta? <a routerLink="/login">Faça Login</a></p>
+    </div>
+  </div>
+</div>

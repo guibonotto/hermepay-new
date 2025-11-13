@@ -14,14 +14,15 @@ app.serviceBusTopic('PersistTransactionTrigger', {
         const transactionData = serviceBusMessage;
         context.log('Dados recebidos:', transactionData);
 
-       if (!transactionData || !transactionData.value || !transactionData.store_id || !transactionData.status) {
-            // CORREÇÃO AQUI
+        // Validação
+        if (!transactionData || !transactionData.value || !transactionData.store_id || !transactionData.status) {
             context.error('Mensagem do Service Bus inválida ou incompleta.');
             return; 
         }
 
         const sqlConnectionString = process.env.AZURE_SQL_CONNECTION_STRING;
 
+        // Função auxiliar para ler a string de conexão
         function parseSqlConnectionString(connectionString) {
             const config = {};
             const parts = connectionString.split(';');
@@ -59,10 +60,10 @@ app.serviceBusTopic('PersistTransactionTrigger', {
 
         const connection = new Connection(config);
 
+        // Conexão assíncrona
         await new Promise((resolve, reject) => {
             connection.on('connect', (err) => {
                 if (err) {
-                    // CORREÇÃO AQUI
                     context.error('Erro ao conectar ao Azure SQL:', err.message);
                     reject(err);
                 } else {
@@ -75,12 +76,12 @@ app.serviceBusTopic('PersistTransactionTrigger', {
         });
 
         function executeStatement(resolve, reject) {
+            // Query SQL atualizada com as novas colunas
             const request = new Request(`
-                INSERT INTO transactions (store_id, payer_email, value, status) 
-                    VALUES (@store_id, @payer_email, @value, @status);
+                INSERT INTO transactions (store_id, payer_email, value, status, products_json, external_order_id) 
+                VALUES (@store_id, @payer_email, @value, @status, @products, @order_id);
             `, (err) => {
                 if (err) {
-                    // CORREÇÃO AQUI
                     context.error('Erro ao executar o INSERT SQL:', err);
                     reject(err);
                 } else {
@@ -90,10 +91,21 @@ app.serviceBusTopic('PersistTransactionTrigger', {
                 }
             });
 
-            request.addParameter('store_id', TYPES.Int, transactionData.store_id);
+            // Prepara o JSON de produtos (garante que seja string e não undefined)
+            const productsString = JSON.stringify(transactionData.products || []);
+
+            // --- ADICIONANDO PARÂMETROS ---
+            
+            // 1. CORREÇÃO CRUCIAL: store_id deve ser VarChar (Texto), não Int
+            request.addParameter('store_id', TYPES.VarChar, transactionData.store_id);
+            
             request.addParameter('payer_email', TYPES.VarChar, transactionData.payer_email);
             request.addParameter('value', TYPES.Decimal, transactionData.value);
-            request.addParameter('status', TYPES.VarChar, transactionData.status); 
+            request.addParameter('status', TYPES.VarChar, transactionData.status);
+            
+            // Novos parâmetros
+            request.addParameter('products', TYPES.NVarChar, productsString);
+            request.addParameter('order_id', TYPES.VarChar, transactionData.external_order_id || null);
 
             connection.execSql(request);
         }

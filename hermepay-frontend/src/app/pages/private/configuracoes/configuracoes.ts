@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router'; // <-- MUITO IMPORTANTE!
+// Importe os módulos de Roteamento
+import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-configuracoes',
   standalone: true,
-  imports: [CommonModule, RouterOutlet], // <-- MUITO IMPORTANTE!
+  // Adicione os módulos de Roteamento aqui
+  imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive],
   templateUrl: './configuracoes.html',
   styleUrl: './configuracoes.css'
 })

@@ -3,72 +3,67 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 
-// Pegamos as URLs dos nossos serviços do .env
-const TRANSACOES_API_URL = process.env.SERVICE_TRANSACOES_URL; // Ex: http://localhost:3002
-const FUNCTION_CREATE_URL = process.env.FUNCTION_CREATE_TRANSACTION_URL; // Ex: http://localhost:7071/api/CreateTransactionTrigger
+const TRANSACOES_API_URL = process.env.SERVICE_TRANSACOES_URL;
+const FUNCTION_CREATE_URL = process.env.FUNCTION_CREATE_TRANSACTION_URL;
 
-// Rota 1: CREATE (POST /api/transactions)
-// ESTA É A ROTA ESPECIAL (padrão de evento)
+// Função auxiliar para tratar erros do Axios
+const { handleAxiosError } = require('../utils/proxyHelpers');
+
+// Rota 1: CREATE (POST /)
 router.post('/', async (req, res) => {
     try {
-        // Repassa a requisição POST para a FUNCTION 1 (Mensageiro)
         const response = await axios.post(FUNCTION_CREATE_URL, req.body);
-        // A function deve retornar 202 Accepted
         res.status(response.status).json(response.data);
     } catch (error) {
-        res.status(error.response.status).json(error.response.data);
+        handleAxiosError(error, res); // <-- CORRIGIDO
     }
 });
 
-// Rota 2: READ ALL (GET /api/transactions)
+// Rota 2: READ ALL (GET /)
 router.get('/', async (req, res) => {
     try {
-        // Repassa a requisição GET para o MS-Transações (Leitor)
-        const response = await axios.get(`${TRANSACOES_API_URL}/api/transactions`);
+        const token = req.headers.authorization; // Pega o token do Angular
+        const response = await axios.get(`${TRANSACOES_API_URL}/api/transactions`, {
+            headers: { 'Authorization': token } // Repassa o token
+        });
         res.status(response.status).json(response.data);
     } catch (error) {
-        res.status(error.response.status).json(error.response.data);
+        handleAxiosError(error, res); // <-- CORRIGIDO
     }
 });
-    router.get('/stats', async (req, res) => {
+
+// Rota: STATS (GET /stats)
+router.get('/stats', async (req, res) => {
     try {
-        const response = await axios.get(`${TRANSACOES_API_URL}/api/transactions/stats`);
+        const token = req.headers.authorization; // <--- PEGA O TOKEN
+        const response = await axios.get(`${TRANSACOES_API_URL}/api/transactions/stats`, {
+            headers: { 'Authorization': token } // <--- ENVIA O TOKEN
+        });
         res.status(response.status).json(response.data);
     } catch (error) {
-        res.status(error.response.status).json(error.response.data);
+        handleAxiosError(error, res);
     }
 });
 
 // Rota 3: READ ONE (GET /:id)
-router.get('/stats', async (req, res) => {
-    try {
-        const response = await axios.get(`${TRANSACOES_API_URL}/api/transactions/stats`);
-        res.status(response.status).json(response.data);
-    } catch (error) {
-        res.status(error.response.status).json(error.response.data);
-    }
-});
-
-
-// Rota 3: READ ONE (GET /api/transactions/:id)
 router.get('/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const response = await axios.get(`${TRANSACOES_API_URL}/api/transactions/${id}`);
         res.status(response.status).json(response.data);
     } catch (error) {
-        res.status(error.response.status).json(error.response.data);
+        handleAxiosError(error, res); // <-- CORRIGIDO (Este era o que crashava)
     }
 });
 
-// Rota 4: DELETE (DELETE /api/transactions/:id)
+// Rota 4: DELETE (DELETE /:id)
 router.delete('/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const response = await axios.delete(`${TRANSACOES_API_URL}/api/transactions/${id}`);
         res.status(response.status).json(response.data);
     } catch (error) {
-        res.status(error.response.status).json(error.response.data);
+        handleAxiosError(error, res); // <-- CORRIGIDO
     }
 });
 
