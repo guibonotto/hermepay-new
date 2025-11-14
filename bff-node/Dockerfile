@@ -18,4 +18,4 @@ COPY . .
 EXPOSE 3000
 
 # ---- 7. O Comando Final ----
-CMD [ "npm", "start" ]
+CMD ["node", "index.js"]
